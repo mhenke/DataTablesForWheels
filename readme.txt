@@ -1,34 +1,66 @@
-CFWheels plugin for LESS v0.1
-http://github.com/mhenke/lessForWheels
+CFWheels plugin for DataTables v0.1
+http://github.com/mhenke/DataTablesForWheels
+
 
 Third party software:
-http://javaloader.riaforge.org/
-http://www.mozilla.org/rhino/
-http://www.asual.com/lesscss/
+http://www.datatables.net/
+http://jquery.com/
 
 Requires:
 # Wheels 1.0.5
-# javaloaderCFWheels plugin
-# http://github.com/mhenke/javaloaderCFWheels
+# DataTables jquery plugin
+# jQuery
  
 TO USE
-1) Place the LessEngine-X.X.zip in your plugins folder
+1) Place the DataTables-X.X.zip in your plugins folder
 
-2) Make sure you have the JavaLoader-xx.xx.zip installed.
-http://github.com/mhenke/javaloaderCFWheels
+2) Add this code to your /Controllers/Controller.cfc
 
-4) Add to events/onapplicationstart.cfm this code 
-	<cfset application.javaloader = javaLoader() />
-	<cfset doLessGeneration = LessEngine() />
+<cfinclude template="/plugins/datatables/datatables.cfm" />
 
-You should be good to go now and generate css files from less files.
+3) Reload your Wheels application.
+Example: http://localhost/index.cfm?reload=true
+
+You should be good to go now.
 
 EXAMPLES OF USE
-Create your less files in /stylesheets/less
-On Application Start your less files will be generated and created in the stylesheets folder
- 
-ADDITIONAL FOR DEMO 
+
+In your view file include:
+	<head>
+		<cfoutput>
+		#javaScriptIncludeTag("jquery-1.4.2.min")#
+		#stylesheetLinkTag("demo_table")#
+		<!--- pass in controller and ACTION NAME --->
+		#getdatatablesJS("datatables","example")#
+		</cfoutput>
+	</head>
+	
+	<table cellpadding="0" cellspacing="0" border="0" class="display" id="example_table_id">
+		<thead>
+			<tr>
+				<th>Rendering engine</th>
+				<th>Browser</th>
+				<th>Platform(s)</th>
+				<th>Engine version</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="4" class="dataTables_empty">Loading data from server</td>
+			.........
+	</table>
+
+In your Controller have a function called your ACTION NAME that returns a query.
+
+	<!--- my ACTION NAME for the datatables --->
+	<cffunction name="example" returntype="Query" access="private" >
+		<cfset var entries = model("entry").findAll(select="BODY,CATEGORYID,TITLE,dateCreated") />
+		<cfreturn entries />
+	</cffunction>
+
+DEMO
 Unzip the Demo-x.x.zip file into CFWheel's webroot.
- 
-Reload your Wheels application.
-Example: http://localhost/index.cfm?reload=true
+You will need to place the jquery and dataTables js files in your javascripts folder
+You will need to place the demo_table.css in your stylesheets folder
+
+Load - http://localhost/index.cfm/datatables/demo
