@@ -1,0 +1,4 @@
+This license is for the LESS CSS Wheels plugin is Creative Commons Attribution 3.0 Unported License
+ http://creativecommons.org/licenses/by/3.0/ 
+ 
+This should not and does does not supercede or infringe upon any other third party licenses included.
