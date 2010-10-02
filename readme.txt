@@ -1,7 +1,6 @@
 CFWheels plugin for DataTables v0.1
 http://github.com/mhenke/DataTablesForWheels
 
-
 Third party software:
 http://www.datatables.net/
 http://jquery.com/
@@ -35,6 +34,7 @@ In your view file include:
 		</cfoutput>
 	</head>
 	
+	<!--- id name is your ACTION NAME appended with _table_id --->
 	<table cellpadding="0" cellspacing="0" border="0" class="display" id="example_table_id">
 		<thead>
 			<tr>
@@ -62,5 +62,6 @@ DEMO
 Unzip the Demo-x.x.zip file into CFWheel's webroot.
 You will need to place the jquery and dataTables js files in your javascripts folder
 You will need to place the demo_table.css in your stylesheets folder
+You will need to place the dataTables images in your images folder? (not sure)
 
 Load - http://localhost/index.cfm/datatables/demo
