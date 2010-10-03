@@ -8,6 +8,7 @@
 	<cffunction name="getdatatablesJS">
 		<cfargument name="myController" type="string" required="true" />
 		<cfargument name="myAction" type="string" required="true" />
+		<cfargument name="sIndexColumn" type="string" default="1" />
 		
 		<cfset var myActionID = "#arguments.myAction#_table_id" />
 		<cfset var datasorter_js = "" />
@@ -22,7 +23,7 @@
 						"bProcessing": true,
 						"bServerSide": true,
 						"sPaginationType": "full_numbers",
-						"sAjaxSource": "/index.cfm/<cfoutput>#arguments.myController#</cfoutput>/dataTablesprocessing?qFunctionName=<cfoutput>#arguments.myAction#</cfoutput>"
+						"sAjaxSource": "/index.cfm/<cfoutput>#arguments.myController#</cfoutput>/dataTablesprocessing?qFunctionName=<cfoutput>#arguments.myAction#</cfoutput>&sIndexColumn=<cfoutput>#arguments.sIndexColumn#</cfoutput>"
 					} );
 				} );
 			</script>

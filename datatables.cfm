@@ -6,15 +6,17 @@
 		<cfset var queryObject = "" />
 		<cfset var arrayMetaData = "" />
 		<cfset var json_output = "" />
-		
+		<cfset var thisS = "" />
+
 		<!--- query to use, which is in a function --->
 		<cfparam name="params.qFunctionName" type="string" />
-		<cfparam name="params.sIndexColumn" type="string" default="1" />
+		<cfparam name="params.sIndexColumn" type="string" />
+		
 		<cfparam name="params.iDisplayStart" type="integer" default="0"  />
 		<cfparam name="params.iDisplayLength" type="integer" default="10"  />
-		<cfparam name="params.sEcho" type="string" default="10"  />
+		<cfparam name="params.sEcho" type="string" default="0"  />
 		<cfparam name="params.sSearch" type="string" default="" />
-		<cfparam name="params.iSortingCols" type="integer" default="0"  />
+		<cfparam name="params.iSortingCols" type="integer" default="1"  />
 		
 		<cfset queryObject = evaluate("#params.qFunctionName#()") />
 		<cfset arrayMetaData = getMetaData(queryObject) />
@@ -51,8 +53,20 @@
 					OR upper(#arrayMetaData[thisColumn]["Name"]# ) LIKE <cfqueryparam value="%#ucase(trim(params.sSearch))#%" cfsqltype="cf_sql_varchar">
 				</cfloop>
 			</cfif>
+
+			<!--- Ordering --->
+			ORDER BY 
+		    <cfif params.iSortingCols GT 0 and params.sEcho GT 1>
+				<cfloop from="0" to="#params.iSortingCols-1#" index="thisS">
+					<cfif thisS is not 0>, </cfif>
+					#listGetAt(listColumns,(params["iSortCol_"&thisS]+1))# 
+					<cfif listFindNoCase("asc,desc",params["sSortDir_"&thisS]) gt 0>#params["sSortDir_"&thisS]#</cfif> 
+				</cfloop>
+			<cfelse>
+				#params.sIndexColumn#		
+			</cfif>
 		</cfquery>
-		
+
 		<!--- set length for the initial unfiltered data set --->
 		<cfset qCount.total = queryObject.recordcount />
 		
