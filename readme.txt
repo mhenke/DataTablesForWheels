@@ -31,6 +31,10 @@ In your view file include:
 		#stylesheetLinkTag("demo_table")#
 		<!--- pass in controller and ACTION NAME --->
 		#getdatatablesJS("datatables","example")#
+		
+		<!--- pass in controller, action name, and sort order
+		#getdatatablesJS("datatables","example","body desc, dateCreated desc")#
+		 --->
 		</cfoutput>
 	</head>
 	
