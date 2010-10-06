@@ -1,13 +1,13 @@
-CFWheels plugin for DataTables v0.1
+CFWheels plugin for DataTables v0.3
 http://github.com/mhenke/DataTablesForWheels
 
-Third party software:
+Third party software used:
 http://www.datatables.net/
 http://jquery.com/
 
 Requires:
 # Wheels 1.0.5
-# DataTables jquery plugin
+# DataTables jQuery plugin
 # jQuery
  
 TO USE
@@ -39,20 +39,7 @@ In your view file include:
 	</head>
 	
 	<!--- id name is your ACTION NAME appended with _table_id --->
-	<table cellpadding="0" cellspacing="0" border="0" class="display" id="example_table_id">
-		<thead>
-			<tr>
-				<th>Rendering engine</th>
-				<th>Browser</th>
-				<th>Platform(s)</th>
-				<th>Engine version</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="4" class="dataTables_empty">Loading data from server</td>
-			.........
-	</table>
+	<cfoutput>#getdatatablesHTML(myActionName,myColumnNames)#</cfoutput>
 
 In your Controller have a function called your ACTION NAME that returns a query.
 
@@ -61,11 +48,28 @@ In your Controller have a function called your ACTION NAME that returns a query.
 		<cfset var entries = model("entry").findAll(select="BODY,CATEGORYID,TITLE,dateCreated") />
 		<cfreturn entries />
 	</cffunction>
+	
+	<!--- here is the demo action --->
+	<cffunction name="demo" >
+		<cfset myActionName = "example" />
+		
+		<cfset myColumnNames = ArrayNew(1) />
+		<cfset myColumnNames[1] = "Body" />
+		<cfset myColumnNames[2] = "Category ID" />
+		<cfset myColumnNames[3] = "Title" />
+		<cfset myColumnNames[4] = "Date Created" />
+		
+		<!--- pass in controller and action name 
+		<cfset getdatatablesJS("datatables","example") />
+		--->
+		<!--- pass in controller, action name, and sort order --->
+		<cfset getdatatablesJS("datatables",myActionName,"body desc, dateCreated desc") />
+	</cffunction>
 
 DEMO
 Unzip the Demo-x.x.zip file into CFWheel's webroot.
 You will need to place the jquery and dataTables js files in your javascripts folder
 You will need to place the demo_table.css in your stylesheets folder
-You will need to place the dataTables images in your images folder? (not sure)
+You will need to place the dataTables images in your images folder
 
 Load - http://localhost/index.cfm/datatables/demo
