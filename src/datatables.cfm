@@ -7,7 +7,7 @@
 	<cfset var arrayMetaData = "" />
 	<cfset var json_output = "" />
 	<cfset var thisS = "" />
-	<cfset var flag_case = 0 />
+	<cfset var flag_cast = 0 />
 
 	<!--- query to use, which is in a function --->
 	<cfparam name="params.qFunctionName" type="string" />
@@ -27,15 +27,15 @@
 		<cfset listColumnsCast = ListAppend(listColumnsCast, "CAST(#arrayMetaData[thisColumn]["Name"]# as VARCHAR) as #arrayMetaData[thisColumn]["Name"]#") />
 	
 		<cfif arrayMetaData[thisColumn]["TypeName"] NEQ "VARCHAR">
-			<cfset flag_case = 1 />
+			<cfset flag_cast = 1 />
 		</cfif>
 	</cfloop>
 
 	<!--- set query of queries --->
 	<cfset objAttributes.dbtype = "query"/>
 	
-	<cfif flag_case>
-	<!--- set columns to varchar --->
+	<cfif flag_cast>
+		<!--- set all columns to cast as varchar --->
 		<cfset objAttributes.name="queryObject" />
 		<cfquery attributecollection="#objAttributes#">
 			SELECT #listColumnsCast# 
